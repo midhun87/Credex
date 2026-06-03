@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credex - Practice. Validate. Certify.</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            navy: '#0F172A',
+                            blue: '#2563EB',
+                            lightblue: '#60A5FA',
+                            dark: '#020617',
+                        }
+                    },
+                    boxShadow: {
+                        'glow': '0 0 25px -5px rgba(37, 99, 235, 0.4)',
+                        'glow-lg': '0 0 40px -5px rgba(37, 99, 235, 0.6)',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delayed': 'float 6s ease-in-out 3s infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #F8FAFC;
+            color: #0F172A;
+            overflow-x: hidden;
+        }
+        
+        html { scroll-behavior: smooth; }
+
+        /* Premium Gradients & Glass */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .dark-glass {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #0F172A 0%, #2563EB 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-gradient-light {
+            background: linear-gradient(135deg, #FFFFFF 0%, #93C5FD 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #1D4ED8 0%, #1E3A8A 100%);
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+        .btn-primary:hover::before { left: 0; }
+        .btn-primary:hover { box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.5); transform: translateY(-2px); }
+
+        /* Grid Background Pattern */
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(15, 23, 42, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
+        }
+        .dark-bg-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        }
+
+        /* Scroll Animations */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-blue selection:text-white">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <img class="h-10 md:h-12 w-auto" src="https://res.cloudinary.com/dzuxwvamy/image/upload/v1780483593/Credex_szkzcq.png" alt="Credex Logo">
+                </div>
+                <div class="hidden md:flex space-x-10 items-center">
+                    <a href="#how-it-works" class="text-sm font-semibold text-gray-600 hover:text-brand-blue transition-colors">How it Works</a>
+                    <a href="#features" class="text-sm font-semibold text-gray-600 hover:text-brand-blue transition-colors">Features</a>
+                    <a href="#credentials" class="text-sm font-semibold text-gray-600 hover:text-brand-blue transition-colors">Credentials</a>
+                    <a href="https://testify.xetasolutions.in/public-portal.html" class="btn-primary text-white px-6 py-2.5 rounded-lg font-bold text-sm">
+                        Access Portal
+                    </a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-brand-navy focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden absolute w-full bg-white border-b border-gray-100 shadow-xl pb-6">
+            <div class="px-6 pt-4 space-y-4">
+                <a href="#how-it-works" class="block text-base font-semibold text-gray-800">How it Works</a>
+                <a href="#features" class="block text-base font-semibold text-gray-800">Features</a>
+                <a href="#credentials" class="block text-base font-semibold text-gray-800">Credentials</a>
+                <a href="https://testify.xetasolutions.in/public-portal.html" class="block w-full text-center bg-brand-blue text-white px-4 py-3 rounded-lg font-bold mt-4">
+                    Access Portal
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden bg-brand-light">
+        <div class="absolute inset-0 bg-grid z-0"></div>
+        <!-- Decorative glowing orbs -->
+        <div class="absolute top-20 left-10 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-[100px] opacity-40 animate-pulse-slow"></div>
+        <div class="absolute top-40 right-10 w-72 h-72 bg-indigo-300 rounded-full mix-blend-multiply filter blur-[100px] opacity-40 animate-pulse-slow" style="animation-delay: 2s;"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+                
+                <!-- Left Content -->
+                <div class="text-left">
+                    <div class="inline-flex items-center px-4 py-2 rounded-full bg-blue-50 border border-blue-200 text-brand-blue text-xs font-bold uppercase tracking-wider mb-6 reveal">
+                        <span class="relative flex h-2 w-2 mr-3">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-blue opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-blue"></span>
+                        </span>
+                        Global Skill Validation Platform
+                    </div>
+                    
+                    <h1 class="text-5xl lg:text-6xl xl:text-7xl font-extrabold tracking-tight text-brand-navy leading-tight mb-6 reveal reveal-delay-1">
+                        Where Skills <br/> Become <span class="text-gradient">Credentials.</span>
+                    </h1>
+                    
+                    <p class="text-lg lg:text-xl text-gray-600 mb-8 max-w-lg leading-relaxed reveal reveal-delay-2">
+                        Practice with industry-standard assessments, experience real exam simulations, and earn professional credentials that showcase your true expertise.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 reveal reveal-delay-3">
+                        <a href="https://testify.xetasolutions.in/public-portal.html" class="btn-primary text-white text-center px-8 py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-3">
+                            Start Free Mock Test
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <a href="#how-it-works" class="px-8 py-4 rounded-xl font-bold text-lg text-brand-navy bg-white border border-gray-200 hover:border-brand-blue hover:text-brand-blue transition-all text-center flex items-center justify-center gap-2 shadow-sm hover:shadow-md">
+                            <i class="fas fa-play-circle text-brand-blue"></i> See How it Works
+                        </a>
+                    </div>
+                    
+                    <div class="mt-10 flex items-center gap-4 text-sm text-gray-500 font-medium reveal reveal-delay-3">
+                        <div class="flex -space-x-2">
+                            <img class="w-8 h-8 rounded-full border-2 border-white object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="User">
+                            <img class="w-8 h-8 rounded-full border-2 border-white object-cover" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100&q=80" alt="User">
+                            <img class="w-8 h-8 rounded-full border-2 border-white object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80" alt="User">
+                            <div class="w-8 h-8 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-600">+2k</div>
+                        </div>
+                        <p>Join professionals upgrading their careers.</p>
+                    </div>
+                </div>
+
+                <!-- Right Content: Floating UI Mockup -->
+                <div class="relative h-[500px] hidden lg:block reveal reveal-delay-2">
+                    <!-- Main Dashboard Card -->
+                    <div class="absolute top-10 right-0 w-[450px] glass-card rounded-2xl p-6 z-20 animate-float shadow-2xl">
+                        <div class="flex justify-between items-center mb-6">
+                            <div>
+                                <h3 class="text-sm font-bold text-gray-500 uppercase">Assessment Score</h3>
+                                <p class="text-2xl font-extrabold text-brand-navy">Advanced React.js</p>
+                            </div>
+                            <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600 border-2 border-green-200">
+                                <i class="fas fa-check text-xl"></i>
+                            </div>
+                        </div>
+                        
+                        <!-- Circular Progress -->
+                        <div class="flex items-center gap-6 mb-6">
+                            <div class="relative w-24 h-24">
+                                <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#E2E8F0" stroke-width="3"/>
+                                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#2563EB" stroke-width="3" stroke-dasharray="92, 100" class="animate-pulse-slow"/>
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center flex-col">
+                                    <span class="text-2xl font-bold text-brand-navy">92%</span>
+                                </div>
+                            </div>
+                            <div class="space-y-3 flex-1">
+                                <div>
+                                    <div class="flex justify-between text-xs font-bold mb-1"><span class="text-gray-600">Logic</span><span class="text-brand-navy">95%</span></div>
+                                    <div class="w-full bg-gray-200 rounded-full h-1.5"><div class="bg-brand-blue h-1.5 rounded-full" style="width: 95%"></div></div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-xs font-bold mb-1"><span class="text-gray-600">Syntax</span><span class="text-brand-navy">88%</span></div>
+                                    <div class="w-full bg-gray-200 rounded-full h-1.5"><div class="bg-indigo-500 h-1.5 rounded-full" style="width: 88%"></div></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-blue-50 border border-blue-100 rounded-xl p-4 flex items-center gap-4">
+                            <i class="fas fa-certificate text-3xl text-brand-blue"></i>
+                            <div>
+                                <p class="text-sm font-bold text-brand-navy">Credential Unlocked!</p>
+                                <p class="text-xs text-gray-500 font-medium">Ready to share on LinkedIn</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Floating Accent Card 1 -->
+                    <div class="absolute bottom-10 -left-10 w-64 glass-card rounded-xl p-4 z-30 animate-float-delayed shadow-xl border-t-4 border-t-brand-blue">
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-brand-blue text-sm">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <h4 class="font-bold text-brand-navy text-sm">Mock Test Scheduled</h4>
+                        </div>
+                        <p class="text-xs text-gray-500 font-medium ml-11">Tomorrow, 10:00 AM EST</p>
+                    </div>
+
+                    <!-- Floating Logo Box -->
+                    <div class="absolute top-0 right-10 w-20 h-20 bg-white rounded-2xl shadow-glow flex items-center justify-center z-10 animate-float">
+                        <img src="https://res.cloudinary.com/dzuxwvamy/image/upload/v1780483593/Credex_szkzcq.png" alt="Credex" class="w-12 h-12 object-contain">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <section class="bg-brand-navy border-b border-gray-800 relative z-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-gray-700">
+                <div class="reveal">
+                    <p class="text-3xl md:text-4xl font-extrabold text-white mb-1">50+</p>
+                    <p class="text-sm text-blue-300 font-medium uppercase tracking-wide">Technologies</p>
+                </div>
+                <div class="reveal reveal-delay-1">
+                    <p class="text-3xl md:text-4xl font-extrabold text-white mb-1">10k+</p>
+                    <p class="text-sm text-blue-300 font-medium uppercase tracking-wide">Mock Tests Taken</p>
+                </div>
+                <div class="reveal reveal-delay-2">
+                    <p class="text-3xl md:text-4xl font-extrabold text-white mb-1">99%</p>
+                    <p class="text-sm text-blue-300 font-medium uppercase tracking-wide">Validation Accuracy</p>
+                </div>
+                <div class="reveal reveal-delay-3">
+                    <p class="text-3xl md:text-4xl font-extrabold text-white mb-1">24/7</p>
+                    <p class="text-sm text-blue-300 font-medium uppercase tracking-wide">Flexible Booking</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Journey (How it Works) -->
+    <section id="how-it-works" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <h2 class="text-brand-blue font-bold tracking-wide uppercase text-sm mb-2">The Process</h2>
+                <h3 class="text-3xl md:text-4xl font-extrabold text-brand-navy mb-4">Your Pathway to Validation</h3>
+                <p class="text-lg text-gray-600">A seamless journey from assessing your current knowledge to earning industry-recognized proof of your skills.</p>
+            </div>
+
+            <div class="relative">
+                <!-- Connecting Line (Desktop) -->
+                <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-blue-100 via-brand-blue to-blue-100 transform -translate-y-1/2 z-0"></div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10">
+                    <!-- Step 1 -->
+                    <div class="bg-white rounded-2xl p-8 border border-gray-100 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 reveal text-center group">
+                        <div class="w-20 h-20 mx-auto bg-brand-navy rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:bg-brand-blue transition-colors">
+                            <i class="fas fa-laptop-code text-3xl text-white"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold text-brand-navy mb-3">1. Practice</h4>
+                        <p class="text-gray-600 font-medium">Take industry-focused practice tests to identify knowledge gaps and get familiar with exam patterns.</p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="bg-white rounded-2xl p-8 border border-gray-100 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 reveal reveal-delay-1 text-center group">
+                        <div class="w-20 h-20 mx-auto bg-brand-navy rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:bg-brand-blue transition-colors">
+                            <i class="fas fa-tasks text-3xl text-white"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold text-brand-navy mb-3">2. Validate</h4>
+                        <p class="text-gray-600 font-medium">Book a slot and take a real-time, proctored mock exam to simulate actual pressure and environments.</p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="bg-white rounded-2xl p-8 border border-gray-100 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 reveal reveal-delay-2 text-center group border-b-4 border-b-brand-blue">
+                        <div class="w-20 h-20 mx-auto bg-brand-blue rounded-2xl flex items-center justify-center mb-6 shadow-glow transition-colors">
+                            <i class="fas fa-medal text-3xl text-white"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold text-brand-navy mb-3">3. Certify</h4>
+                        <p class="text-gray-600 font-medium">Receive a detailed performance scorecard and earn a Credex professional credential to share.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Premium Features Section (Dark Mode) -->
+    <section id="features" class="py-24 bg-brand-dark relative overflow-hidden">
+        <div class="absolute inset-0 dark-bg-grid z-0"></div>
+        <!-- Glow effects -->
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-blue rounded-full mix-blend-screen filter blur-[150px] opacity-20 pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-indigo-600 rounded-full mix-blend-screen filter blur-[150px] opacity-20 pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <h2 class="text-3xl md:text-5xl font-extrabold text-white mb-6">Assessment <span class="text-gradient-light">Beyond Scores</span></h2>
+                <p class="text-lg text-gray-400">Our platform doesn't just grade you; it analyzes, guides, and certifies you with industry-backed technology.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10">
+                <!-- Feature A -->
+                <div class="dark-glass rounded-2xl p-8 hover:border-brand-blue transition-colors group reveal">
+                    <div class="flex items-start gap-6">
+                        <div class="w-14 h-14 rounded-xl bg-gray-800 flex items-center justify-center flex-shrink-0 group-hover:bg-brand-blue group-hover:shadow-glow transition-all">
+                            <i class="fas fa-chart-pie text-2xl text-blue-400 group-hover:text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-3">Deep Analytics & Insights</h3>
+                            <p class="text-gray-400 leading-relaxed text-sm">Get granular details on your performance. Understand exactly which topics need more focus and track your improvement over time.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature B -->
+                <div class="dark-glass rounded-2xl p-8 hover:border-brand-blue transition-colors group reveal reveal-delay-1">
+                    <div class="flex items-start gap-6">
+                        <div class="w-14 h-14 rounded-xl bg-gray-800 flex items-center justify-center flex-shrink-0 group-hover:bg-brand-blue group-hover:shadow-glow transition-all">
+                            <i class="fas fa-shield-alt text-2xl text-blue-400 group-hover:text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-3">Real Exam Simulation</h3>
+                            <p class="text-gray-400 leading-relaxed text-sm">Experience the exact timing, pressure, and UI constraints of actual global certification exams to eliminate test anxiety.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature C -->
+                <div class="dark-glass rounded-2xl p-8 hover:border-brand-blue transition-colors group reveal">
+                    <div class="flex items-start gap-6">
+                        <div class="w-14 h-14 rounded-xl bg-gray-800 flex items-center justify-center flex-shrink-0 group-hover:bg-brand-blue group-hover:shadow-glow transition-all">
+                            <i class="fas fa-clock text-2xl text-blue-400 group-hover:text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-3">Flexible Slot Booking</h3>
+                            <p class="text-gray-400 leading-relaxed text-sm">Schedule your mock exams at your convenience. Our automated system ensures a proctor-like environment whenever you are ready.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature D -->
+                <div class="dark-glass rounded-2xl p-8 hover:border-brand-blue transition-colors group reveal reveal-delay-1">
+                    <div class="flex items-start gap-6">
+                        <div class="w-14 h-14 rounded-xl bg-gray-800 flex items-center justify-center flex-shrink-0 group-hover:bg-brand-blue group-hover:shadow-glow transition-all">
+                            <i class="fas fa-share-nodes text-2xl text-blue-400 group-hover:text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-3">Shareable Credentials</h3>
+                            <p class="text-gray-400 leading-relaxed text-sm">Upon passing, receive a digital badge and certificate powered by Credex to showcase your verified skills on LinkedIn and resumes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bottom CTA Section -->
+    <section id="credentials" class="py-20 relative overflow-hidden bg-brand-blue">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center reveal">
+            <div class="w-24 h-24 mx-auto bg-white rounded-full flex items-center justify-center mb-8 shadow-2xl">
+                <img src="https://res.cloudinary.com/dzuxwvamy/image/upload/v1780483593/Credex_szkzcq.png" alt="Credex Icon" class="w-16 object-contain">
+            </div>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-6">Ready to Prove Your Expertise?</h2>
+            <p class="text-xl text-blue-100 mb-10 max-w-2xl mx-auto font-medium">
+                Claim your <span class="bg-yellow-400 text-brand-navy px-2 py-0.5 rounded font-bold">FREE</span> first mock test voucher today and start building your credential portfolio.
+            </p>
+            <a href="https://testify.xetasolutions.in/public-portal.html" class="inline-flex items-center justify-center bg-white text-brand-blue px-10 py-5 rounded-xl font-extrabold text-xl hover:bg-gray-50 transition-all shadow-[0_0_40px_rgba(255,255,255,0.3)] hover:shadow-[0_0_60px_rgba(255,255,255,0.5)] hover:-translate-y-1 group">
+                Access Credex Portal
+                <i class="fas fa-arrow-right ml-3 group-hover:translate-x-2 transition-transform"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white pt-20 pb-10 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row justify-between items-center lg:items-start gap-12 mb-16">
+                <!-- Brand Info -->
+                <div class="text-center lg:text-left max-w-sm">
+                    <img class="h-12 w-auto mx-auto lg:mx-0 mb-6" src="https://res.cloudinary.com/dzuxwvamy/image/upload/v1780483593/Credex_szkzcq.png" alt="Credex Logo">
+                    <p class="text-sm text-gray-500 font-medium leading-relaxed mb-6">
+                        The next-generation assessment platform designed to help learners prove their skills with confidence.
+                    </p>
+                    <p class="text-xs font-bold text-brand-navy tracking-widest uppercase">Practice. Validate. Certify.</p>
+                </div>
+
+                <!-- Ecosystem / Pedigree -->
+                <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100 text-center lg:text-right w-full lg:w-auto">
+                    <p class="text-xs text-gray-400 uppercase tracking-widest font-bold mb-4">Proudly Powered By</p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-end gap-8">
+                        <div class="flex flex-col items-center gap-2">
+                            <span class="text-[10px] text-gray-400 font-semibold uppercase">Assessment Engine</span>
+                            <img class="h-8 w-auto grayscale hover:grayscale-0 transition-all duration-300" src="https://res.cloudinary.com/dpz44zf0z/image/upload/v1756037774/Gemini_Generated_Image_eu0ib0eu0ib0eu0i_z0amjh.png" alt="Testify">
+                        </div>
+                        <div class="hidden sm:block h-10 w-px bg-gray-200"></div>
+                        <div class="flex flex-col items-center gap-2">
+                            <span class="text-[10px] text-gray-400 font-semibold uppercase">Parent Company</span>
+                            <img class="h-6 w-auto grayscale hover:grayscale-0 transition-all duration-300" src="https://res.cloudinary.com/djdwpjm7x/image/upload/v1771001520/Xeta_Header_wfw12w.png" alt="Xeta Tech Solutions">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-sm text-gray-500 font-medium text-center md:text-left">
+                    &copy; <span id="year"></span> Credex. A product of Xeta Tech Solutions. All rights reserved.
+                </p>
+                <div class="flex space-x-6 mt-6 md:mt-0">
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-brand-blue hover:text-white transition-all"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-brand-blue hover:text-white transition-all"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-brand-blue hover:text-white transition-all"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set current year
+            document.getElementById('year').textContent = new Date().getFullYear();
+
+            // Mobile menu toggle
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            const icon = btn.querySelector('i');
+
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+                if(menu.classList.contains('hidden')){
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                } else {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                }
+            });
+
+            // Navbar background on scroll
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 20) {
+                    navbar.classList.add('shadow-md');
+                } else {
+                    navbar.classList.remove('shadow-md');
+                }
+            });
+
+            // Scroll Animation Reveal
+            const revealElements = document.querySelectorAll('.reveal');
+            
+            const revealOptions = {
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                });
+            }, revealOptions);
+
+            revealElements.forEach(el => revealOnScroll.observe(el));
+        });
+    </script>
+</body>
+</html>
